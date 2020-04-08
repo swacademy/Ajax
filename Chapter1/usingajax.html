@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script>
+	window.addEventListener("load", setup, false);
+	function setup(){
+		document.getElementById("btnCalc").addEventListener("click", Click, false);
+	}
+	function Click(){
+		var xmlObj = new XMLHttpRequest();
+		var param = "num1=" + document.getElementById("num1").value +
+		                    "&num2=" + document.getElementById("num2").value;
+		xmlObj.onreadystatechange = function(){
+			if(xmlObj.readyState == 4 && xmlObj.status == 200){
+				document.getElementById("answer").value = xmlObj.responseText;
+			}
+		}
+		xmlObj.open("get", "usingajax.jsp?" + param, true);
+		xmlObj.send(null);
+	}
+</script>
+</head>
+<body>
+	<input type="text" id="num1" size="10" /> X 
+	<input type="text" id="num2" size="10" /> =
+	<input type="text" id="answer" size="10" />&nbsp;&nbsp;
+	<input type="button" value="Calculate" id="btnCalc" />
+</body>
+</html>

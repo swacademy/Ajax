@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+	table{
+		margin:auto;
+		width:600px;
+		border-collapse : collapse;
+	}
+	th, td{
+		border : 1px solid black;
+	}
+	th{
+		background-color:yellow;
+		color:darkblue;
+	}
+	td{
+		text-align:center;
+	}
+</style>
+<script type="text/javascript" src="js/httpRequest.js"></script>
+<script type="text/javascript">
+	function send(){
+		sendRequest("sungjuk_utf8.csv", '', callback, "get");
+	}
+	function callback(){
+		if(httpRequest.readyState == 4 && httpRequest.status == 200){
+			var doc = httpRequest.responseText;
+			var ascii13 = String.fromCharCode(13);   //enter key value
+			var array = doc.split(ascii13);
+			var str = "<table><caption>성적 데이터</caption>";
+			var thArray = ["학번", "이름", "국어", "영어", "수학", "전산"];
+			str += "<thead><tr>";
+			for(var i = 0 ; i < thArray.length ; i++){
+				str += "<th>" + thArray[i] + "</th>";
+			}
+			str += "</tr></thead><tbody>";
+			for(i = 0 ; i < array.length ; i++){
+				str += "<tbody><tr>";
+				var str1 = array[i].split(",");  //5칸
+				for(var j = 0 ; j < str1.length ; j++){
+					str += "<td>" + str1[j] + "</td>";
+				}
+				str += "</tr>";
+			}
+			str += "</tbody></table>";
+			document.getElementById("btn").disabled = "false";
+			document.getElementById("rcvMsg").innerHTML = str;
+		}
+	}
+</script>
+</head>
+<body>
+	<input type="button" id="btn" onclick="send()" value="성적 데이터 파일수신" /><br />
+    <div id="rcvMsg"></div>
+</body>
+</html>

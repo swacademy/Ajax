@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<title>Insert title here</title>
+	<script type="text/javascript">
+		window.addEventListener("load", setup, false);
+		function setup(evt){
+			document.getElementById('mytext').addEventListener('change', startAjax, false);
+		}
+		function startAjax(){
+			//document.forms[0].submit();
+			var xmlObj;
+			//try{
+				//FF, Safari, Chrome, Opera, IE8 higher
+				xmlObj = new XMLHttpRequest();				
+			//}catch(e){   //IE 7  이하
+			//	xmlObj = new ActiveXObject("Microsoft.XMLHttp");
+			//}catch(e){
+			//	alert("이 브라우저는 Ajax를 지원하지 않습니다.");
+			//	return false;
+			//}
+			xmlObj.onreadystatechange = function(){
+				if(xmlObj.readyState == 4){
+					document.getElementById("mytime").value = xmlObj.responseText;
+					//alert(xmlObj.responseText);
+				}
+			}
+			xmlObj.open("get", "date.jsp", true);
+			xmlObj.send(null);
+		}
+	</script>
+</head>
+<body>
+	<form>
+		Name : <input type="text" id="mytext" /><br /><br />
+		<input type="text" id="mytime" size="30"/> 
+	</form>
+</body>
+</html>

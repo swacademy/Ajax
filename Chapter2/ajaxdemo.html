@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script>
+	function getData(url){
+		xmlObj = new XMLHttpRequest();
+		xmlObj.open("get", url);
+		xmlObj.onreadystatechange = myCallback;
+		xmlObj.send(null);
+	}
+	function myCallback(){
+		if(xmlObj.readyState == 4 && xmlObj.status == 200){
+			document.getElementById("targetDiv").innerHTML = xmlObj.responseText;
+		}
+	}
+</script>
+</head>
+<body>
+	<form>
+		<input type="button" value="Display Message" onclick="getData('data.txt');" />
+	</form><br />
+	<div id="targetDiv">
+		<p>here</p>
+	</div>
+</body>
+</html>

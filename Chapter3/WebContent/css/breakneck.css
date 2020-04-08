@@ -1,0 +1,17 @@
+div {
+  color: darkred;
+  font-family: sans-serif;
+  margin: auto;
+  padding: 1em;
+  border: double darkred;
+  width:615px;
+  
+}
+
+.customer-info {
+  font-weight: bold;
+}
+
+.customer-data {
+  color: black;
+}

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Break Neck Pizza Delivery</title>
+<link rel="stylesheet" type="text/css" href="css/breakneck.css" media="screen" />
+<script src="js/httpRequest.js"></script>
+<script>
+	var xmlObj;
+	function getCustomerInfo(){
+		var phone = document.getElementById("phone").value;
+		var param = "phone=" + escape(phone);
+		//xmlObj = sendRequest("lookupCustomer.jsp", param, updatePage, "get");
+		xmlObj = new XMLHttpRequest();
+		xmlObj.onreadystatechange = updatePage;
+		xmlObj.open("get", "lookupCustomer.jsp?" + param);
+		xmlObj.send(null);
+	}
+	function updatePage(){
+		if(xmlObj.readyState == 4 && xmlObj.status == 200){
+	 		var customerAddress = xmlObj.responseText;
+	 		document.getElementById("address").value = customerAddress;
+		}
+	}
+</script>
+</head>
+<body>
+	<div>
+	<p><img src="images/breakneck-logo.gif" alt="Break Neck Pizza" /></p>
+	<form method="POST" action="placeOrder.jsp">
+   		<p><label for="phone">Enter your phone number:</label>
+    	<input type="text" size="30" name="phone" id="phone" onChange="getCustomerInfo()"/>
+   		</p>
+   		<p><label>Your order will be delivered to:</label></p>
+   		<p><textarea name="address" rows="4" cols="60" id="address"></textarea></p>
+   		<p>Type your order in here:</p>
+   		<p><textarea name="order" rows="6" cols="60" id="order"></textarea></p>
+   		<p><input type="submit" value="Order Pizza" id="submit" /></p>
+  	</form>
+  	</div>
+</body>
+</html>

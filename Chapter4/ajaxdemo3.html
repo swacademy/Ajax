@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+	table{
+		margin:auto;
+		width:600px;
+		border-collapse : collapse;
+	}
+	th, td{
+		border : 1px solid black;
+	}
+	th{
+		background-color:yellow;
+		color:darkblue;
+	}
+	td{
+		text-align:center;
+	}
+</style>
+<script type="text/javascript" src="js/httpRequest.js"></script>
+<script type="text/javascript">
+	function send(){
+		sendRequest("sungjuk_utf8.xml", '', callback, "get");		
+	}
+	function callback(){
+		if(httpRequest.readyState == 4 && httpRequest.status == 200){
+			var xmlDoc = httpRequest.responseXML;
+			var students = xmlDoc.firstChild;
+			var rowNode, cellNode, dataNode;
+			var str = "<table><caption>성적 데이터</caption>";
+			var thArray = ["학번", "이름", "국어", "영어", "수학", "전산"];
+			str += "<thead><tr>";
+			for(var i = 0 ; i < thArray.length ; i++){
+				str += "<th>" + thArray[i] + "</th>";
+			}
+			str += "</tr></thead><tbody>";
+			for(i = 0 ; i < students.childNodes.length ; i++){
+				if(students.childNodes[i].tagName == "student"){
+					rowNode = students.childNodes[i];   //length == 12
+					str += "<tr>";
+					str += "<td>" + rowNode.attributes[0].value + "</td>";  //hakbun 
+					cellNode = rowNode.childNodes;   //length == 7
+					for(var j = 0 ; j < cellNode.length ; j++){
+						if(cellNode[j].nodeType == 1){  //element
+							str += "<td>" + cellNode[j].firstChild.nodeValue + "</td>";
+						}
+					}
+					str += "</tr>";
+				}
+			}				
+			str += "</tbody></table>";
+			document.getElementById("rcvMsg").innerHTML = str;
+		}
+	}
+</script>
+</head>
+<body>
+<h1>성적 데이터 XML 파일 수신</h1>
+<input type="button" value="XML 파일 수신" id="btn" onclick="send()"/><br />
+<div id="rcvMsg"></div>
+</body>
+</html>

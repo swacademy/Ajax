@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<!--  <script type="text/javascript" src="js/simpleRef.js"></script>-->
+<script type="text/javascript" src="js/httpRequest.js"></script>
+<script type="text/javascript">
+	window.onload=setup;
+	function setup(){
+		document.getElementById("btn").onclick=Click;
+	}
+	function Click(){
+		sendRequest('test.jsp', '', myCallback, "get");
+		//xmlObj = createHttpRequestObject();
+		//xmlObj.open("get",  "test.jsp", true);
+		//xmlObj.onreadystatechange = myCallback;
+		//xmlObj.send(null);
+	}
+	function myCallback(){
+		if(httpRequest.readyState == 4 && httpRequest.status == 200){
+			alert(httpRequest.responseText);
+		}
+	}
+</script>
+</head>
+<body>
+	<input type="button" value="Click Me" id="btn" />
+</body>
+</html>

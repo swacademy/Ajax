@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" src="js/httpRequest.js"></script>
+<script type="text/javascript">
+	window.onload=setup;
+	function setup(){
+		document.getElementById("btn").onclick=Click;
+	}
+	function Click(){
+		var aaa = encodeURIComponent(document.getElementById("irum").value);
+		var param = "irum=" + aaa;
+		sendRequest("idcheck.jsp", param, myCall, "get");
+	}
+	function myCall(){
+		if(httpRequest.readyState == 4 && httpRequest.status == 200){
+			alert(httpRequest.responseText);
+		}
+	}
+</script>
+</head>
+<body>
+	Name : <input type="text" name="irum" id="irum" />&nbsp;&nbsp;
+	<input type="button" id="btn" value="전송" />
+</body>
+</html>

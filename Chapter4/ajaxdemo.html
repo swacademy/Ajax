@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" src="js/httpRequest.js"></script>
+<script type="text/javascript">
+	function send(){
+		//sendRequest("greeting_ansi.txt", '', callback, "get");
+		sendRequest("greeting_utf8.txt", '', callback, "get");
+	}
+	function callback(){
+		if(httpRequest.readyState == 4 && httpRequest.status == 200){
+			document.getElementById("rcvMsg").innerHTML = httpRequest.responseText;
+		}
+	}
+</script>
+</head>
+<body>
+<input type="button" id="btn" onclick="send()" value="한글데이터수신" /><br />
+<div id="rcvMsg"></div>
+
+</body>
+</html>

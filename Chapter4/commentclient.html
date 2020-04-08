@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="ko">
+	<head>
+		<meta charset="utf-8" />
+		<title>댓글처리예제</title>
+		<script>
+			var xhrObj, xhrObj1, xhrObj2, xhrObj3;
+			window.onload = function() {
+				loadCommentList();
+			}
+			function loadCommentList() {
+				xhrObj = new XMLHttpRequest();
+				xhrObj.open("get", "commentlist.jsp", true);
+				xhrObj.onreadystatechange = loadCommentResult;
+				xhrObj.send(null);
+			}
+			function loadCommentResult() {
+				if (xhrObj.readyState == 4 && xhrObj.status == 200) {
+					var xmlDoc = xhrObj.responseXML;
+					var code = xmlDoc.getElementsByTagName('code').item(0).firstChild.nodeValue;
+					if (code == 'success') {
+						var commentList = xmlDoc.getElementsByTagName('data').item(0).firstChild.nodeValue;
+						var listDiv = document.getElementById('commentList');
+						for (var i = 0 ; i < commentList.length ; i++) {
+							var commentDiv = makeCommentView(commentList[i]);
+							listDiv.appendChild(commentDiv);
+						}
+					} else if (code == 'error') {
+						var message = xmlDoc.getElementsByTagName('message').item(0).firstChild.nodeValue;
+						alert("에러 발생:"+message);
+					}
+				} else {
+					alert("댓글 목록 로딩 실패:" + xhrObj.status);
+				}
+			}
+			function makeCommentView(comment) {
+				var commentDiv = document.createElement('div');
+				commentDiv.setAttribute('id', 'c' + comment.id);
+				var html = '<strong>' + comment.name + '</strong><br/>' +
+								comment.content.replace(/\n/g, '\n<br/>') + '<br/>' +
+								'<input type="button" value="수정" '+
+								'onclick="viewUpdateForm(' + comment.id + ')"/>' +
+								'<input type="button" value="삭제" ' +
+								'onclick="confirmDeletion(' + comment.id + ')"/>' ;				
+				commentDiv.innerHTML = html;
+				commentDiv.comment = comment;
+				commentDiv.className = "comment";
+				return commentDiv;
+			}
+			function addComment() {
+				var name = document.addForm.name.value;
+				var content = document.addForm.content.value;
+				var params = "name=" + encodeURIComponent(name)+ "&" +
+							 "content=" + encodeURIComponent(content);
+				xhrObj1 = new XMLHttpRequest();
+				xhrObj1.open("post", "commentadd.jsp", true);
+				xhrObj1.setRequestHeader("Content-Type","application/x-www-form-urlencoded;charset=utf-8");
+				xhrObj1.onreadystatechange = addResult;
+				xhrObj1.send(params);
+			}
+			function addResult() {
+				if (xhrObj1.readyState == 4 && xhrObj1.status == 200) {
+					var xmlDoc = xhrObj1.responseXML;
+					var code = xmlDoc.getElementsByTagName('code').item(0).firstChild.nodeValue;
+					if (code == 'success') {
+						var comment = xmlDoc.getElementsByTagName('data').item(0).firstChild.nodeValue;
+						var listDiv = document.getElementById('commentList');
+						var commentDiv = makeCommentView(comment);
+						listDiv.appendChild(commentDiv);					
+						document.addForm.name.value = '';
+						document.addForm.content.value = '';					
+						alert("등록했습니다![" + comment.id + "]");
+					} else if (code == 'fail') {
+						var message = xmlDoc.getElementsByTagName('message').item(0).firstChild.nodeValue;
+						alert("에러 발생:"+message);
+					}
+				} else {
+					alert("서버 에러 발생: " + xhrObj1.status);
+				}
+			}
+			function viewUpdateForm(commentId) {
+				var commentDiv = document.getElementById('c' + commentId);
+				var updateFormDiv = document.getElementById('commentUpdate');
+				if (updateFormDiv.parentNode != commentDiv) {
+					updateFormDiv.parentNode.removeChild(updateFormDiv);
+					commentDiv.appendChild(updateFormDiv);
+				}
+				var comment = commentDiv.comment;
+				document.updateForm.id.value = comment.id;
+				document.updateForm.name.value = comment.name;
+				document.updateForm.content.value = comment.content;
+				updateFormDiv.style.display = '';
+			}
+			function cancelUpdate() {
+				hideUpdateForm();
+			}
+			function hideUpdateForm() {
+				var updateFormDiv = document.getElementById('commentUpdate');
+				updateFormDiv.style.display = 'none';
+				updateFormDiv.parentNode.removeChild(updateFormDiv);
+				document.documentElement.appendChild(updateFormDiv);
+			}
+			function updateComment() {
+				var id = document.updateForm.id.value;
+				var name = document.updateForm.name.value;
+				var content = document.updateForm.content.value;
+				var params = "id="+encodeURIComponent(id)+"&"+
+							 "name="+encodeURIComponent(name)+"&"+
+							 "content="+encodeURIComponent(content);
+				xhrObj2 = new XMLHttpRequest("post", 'commentupdate.jsp', true);
+				xhrObj2.setRequestHeader("Content-Type","application/x-www-form-urlencoded;charset=utf-8");
+				xhrObj2.onreadystatechange = updateResult;
+				xhrObj2.send(params);
+			}
+			function updateResult() {
+				if (xhrObj2.readyState == 4 && xhrObj2.status == 200) {
+					var xmlDoc = req.responseXML;
+					var code = xmlDoc.getElementsByTagName('code').item(0).firstChild.nodeValue;
+					if (code == 'success') {
+						hideUpdateForm();
+						var comment = xmlDoc.getElementsByTagName('data').item(0).firstChild.nodeValue;
+						var listDiv = document.getElementById('commentList');
+						var newCommentDiv = makeCommentView(comment);
+						var oldCommentDiv = document.getElementById('c' + comment.id);
+						listDiv.replaceChild(newCommentDiv, oldCommentDiv);
+						alert("수정했습니다!");
+					} else if (code == 'fail') {
+						var message = xmlDoc.getElementsByTagName('message').item(0).firstChild.nodeValue;
+						alert("에러 발생:"+message);
+					}
+				} else {
+					alert("서버 에러 발생: " + xhrObj2.status);
+				}
+			}
+			function confirmDeletion(commentId) {
+				if (confirm("삭제하시겠습니까?")) {
+					var params = "id="+commentId;
+					xhrObj3 = new XMLHttpRequest();
+					xhrObj3.open("post", 'commentdelete.jsp', true);
+					xhrObj3.setRequestHeader("Content-Type","application/x-www-form-urlencoded;charset=utf-8");
+					xhrObj3.onreadystatechange = removeResult;
+					xhrObj3.send(params);
+				}
+			}
+			function removeResult() {
+				if (xhrObj3.readyState == 4 && xhrObj3.status == 200) {
+					var xmlDoc = req.responseXML;
+					var code = xmlDoc.getElementsByTagName('code').item(0).firstChild.nodeValue;
+					if (code == 'success') {
+						var deletedId = xmlDoc.getElementsByTagName('id').item(0).firstChild.nodeValue;
+						var commentDiv = document.getElementById("c" + deletedId);
+						commentDiv.parentNode.removeChild(commentDiv);					
+						alert("삭제했습니다");
+					} else if (code == 'fail') {
+						var message = xmlDoc.getElementsByTagName('message').item(0).firstChild.nodeValue;
+						alert("에러 발생:"+message);
+					}
+				} else {
+					alert("서버 에러 발생: " + xhrObj3.status);
+				}
+			}
+		</script>
+		<style>
+			div.comment {
+				border: 1px solid #000;
+				padding-bottom: 3px;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="commentList"></div>
+
+		<div id="commentAdd">
+			<form action="" name="addForm">
+				이름: <input type="text" name="name" size="10"><br/>
+				내용: <textarea name="content" cols="20" rows="2"></textarea><br/>
+			<input type="button" value="등록" onclick="addComment()"/>
+			</form>
+		</div>
+
+		<div id="commentUpdate" style="display: none">
+			<form action="" name="updateForm">
+				<input type="hidden" name="id" value=""/>
+					이름: <input type="text" name="name" size="10"><br/>
+					내용: <textarea name="content" cols="20" rows="2"></textarea><br/>
+				<input type="button" value="등록" onclick="updateComment()"/>
+				<input type="button" value="취소" onclick="cancelUpdate()"/>
+			</form>
+		</div>
+	</body>
+</html>

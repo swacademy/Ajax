@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script>
+	var xmlObj;
+	function getData(url){
+		xmlObj = new XMLHttpRequest();
+		xmlObj.open("get", url, true);
+		xmlObj.onreadystatechange = OnMouseOver;
+		xmlObj.send(null);		
+	}
+	function OnMouseOver(){
+		if(xmlObj.readyState == 4 && xmlObj.status == 200){
+			document.getElementById("targetDiv").innerHTML = xmlObj.responseText;
+		}
+	}
+</script>
+</head>
+<body>
+	<h1>Mouse Over Ajax Demo</h1>
+	<img src="images/23.jpg" width="30" height="30" onmouseover="getData('pizzas.txt')" />
+	<img src="images/24.jpg" width="30" height="30" onmouseover="getData('sandwiches.txt')" />
+	<img src="images/pizzas.jpg" onmouseover="getData('soups.txt')" /><br />
+	<div id="targetDiv">
+		<p>Welcome to my restaurant!</p>
+	</div>
+</body>
+</html>

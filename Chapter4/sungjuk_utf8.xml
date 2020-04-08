@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<students>
+	<student hakbun="1101">
+		<irum>한송이</irum><kor>78</kor><eng>87</eng><mat>83</mat><edp>78</edp>
+	</student>
+	<student hakbun="1102">
+		<irum>정다워</irum><kor>88</kor><eng>83</eng><mat>57</mat><edp>98</edp>
+	</student>
+	<student hakbun="1103">
+		<irum>그리운</irum><kor>76</kor><eng>56</eng><mat>87</mat><edp>78</edp>
+	</student>
+	<student hakbun="1104">
+		<irum>고아라</irum><kor>83</kor><eng>57</eng><mat>88</mat><edp>73</edp>
+	</student>
+	<student hakbun="1105">
+		<irum>사랑해</irum><kor>87</kor><eng>87</eng><mat>53</mat><edp>55</edp>
+	</student>
+	<student hakbun="1106">
+		<irum>튼튼이</irum><kor>98</kor><eng>97</eng><mat>93</mat><edp>88</edp>
+	</student>
+	<student hakbun="1107">
+		<irum>한아름</irum><kor>68</kor><eng>67</eng><mat>83</mat><edp>89</edp>
+	</student>
+	<student hakbun="1108">
+		<irum>더크게</irum><kor>98</kor><eng>67</eng><mat>93</mat><edp>78</edp>
+	</student>
+	<student hakbun="1109">
+		<irum>더높이</irum><kor>88</kor><eng>99</eng><mat>53</mat><edp>88</edp>
+	</student>
+	<student hakbun="1110">
+		<irum>아리랑</irum><kor>68</kor><eng>79</eng><mat>63</mat><edp>66</edp>
+	</student>
+	<student hakbun="1111">
+		<irum>한산섬</irum><kor>98</kor><eng>89</eng><mat>73</mat><edp>78</edp>
+	</student>
+	<student hakbun="1112">
+		<irum>하나로</irum><kor>89</kor><eng>97</eng><mat>78</mat><edp>88</edp>
+	</student>
+</students>

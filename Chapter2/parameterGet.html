@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="ko">
+	<head>
+		<meta charset="utf-8" />
+		<title>GET방식으로 요청파라미터 보내기</title>
+		<script>
+			var xhrObj;
+			window.onload = function(){
+				document.getElementById("getSend").addEventListener("click", Click, false);
+			}
+			function Click(evt){
+				xhrObj = new XMLHttpRequest();
+				var name = document.getElementById("name").value; 
+				var age = document.getElementById("age").value; 
+				var mobilePhone = document.getElementById("mobilePhone").value; 
+				var msg = "name=" + name + "&age=" + age + "&mobilePhone=" + mobilePhone;
+				var url = "servlets/ParameterGet?" + msg;
+				xhrObj.open("get", url, true);
+				xhrObj.onreadystatechange = resultProcess;
+				xhrObj.send(null);
+			}	
+			function resultProcess(){
+				if(xhrObj.readyState == 4 && xhrObj.status == 200){ 
+					document.getElementById("resultDisplay").innerHTML = xhrObj.responseText; 
+				}
+			}
+		</script>
+	</head>
+	<body>
+		<form>
+			<h3>GET방식으로 요청파라미터 보내기</h3>
+				이름: <input id="name" type="text" /><br/>
+				나이: <input id="age" type="text" /><br/>
+				휴대폰: <input id="mobilePhone" type="text" /><br/>
+			<input id="getSend" type="button" value="GET방식으로 요청파라미터 보내기" /><br/>
+		</form>
+		<h3>응답 결과</h3>
+		<div id="resultDisplay"></div>
+	</body>
+</html>

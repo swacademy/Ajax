@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ko">
+	<head>
+		<meta charset="utf-8" />
+		<title>DOM API를 사용한 HTML 문서 접근</title>
+		<script>
+		window.onload = function() {
+			var roodNode = document.documentElement;
+			console.log("root 태그: "+roodNode.tagName);
+			
+			var bodyNode = document.getElementsByTagName("body").item(0);
+			console.log("body 태그: "+bodyNode.tagName);
+			
+			var spanList = document.getElementsByTagName("span");
+			console.log("span 태그의 개수: " + spanList.length);
+			for (var i = 0 ; i < spanList.length ; i++) {
+				var span = spanList.item(i);
+				console.log((i+1)+"번째 span의 id : "+span.getAttribute("id"));
+			}
+			
+			var debugConsoleDiv = document.getElementById("debugConsole");
+			console.log("debugConsole 요소: "+debugConsoleDiv.tagName);
+			
+			var bodyLastChild = bodyNode.lastChild;
+			console.log("body의 마지막 자식 노드: "+bodyLastChild.nodeName);
+			
+		}
+		</script>
+	</head>
+	<body>
+		<span id="a">a</span>
+		<p>test<span id="b">b</span></p>
+		<div><p>p</p><span id="c">c</span></div>
+		<div id="debugConsole" style="border: 1px solid #000"></div>
+	</body>
+</html>
