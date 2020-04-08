@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Ajax XML with jQuery</title>
+<style>
+	table{
+		margin:auto;
+		width:600px;
+		border-collapse : collapse;
+	}
+	th,td{
+		border : 1px solid black;
+	}
+	th{
+		background-color: lightgreen;
+	}
+	td{
+		text-align:center;
+	}
+</style>
+<script src="js/jquery-1.11.1.js"></script>
+<script>
+	$(document).ready(function(){
+		$('#mybtn').bind("click", function(){
+			var str = "<table><caption>성적 데이터</caption>";
+			var thArray = ["학번", "이름", "국어", "영어", "수학", "전산"];
+			str += "<thead><tr>";
+			for(var i = 0 ; i < thArray.length ; i++){
+				str += "<th>" + thArray[i] + "</th>";
+			}
+			str += "</tr></thead><tbody>";
+			$.ajax({
+				url : "sungjuk_utf8.xml",
+				dataType : "xml",
+				success : function(xml){
+					$(xml).find("student").each(function(){
+						var trstr = "<tr>";
+						trstr += "<td>" + $(this).attr('hakbun') + "</td>";
+						trstr += "<td>" + $(this).find('irum').text() + "</td>";
+						trstr += "<td>" + $(this).find('kor').text() + "</td>";
+						trstr += "<td>" + $(this).find('eng').text() + "</td>";
+						trstr += "<td>" + $(this).find('mat').text() + "</td>";
+						trstr += "<td>" + $(this).find('edp').text() + "</td>";
+						trstr += "</tr>";
+						$('tbody').append(trstr);
+					});
+				}
+			});
+			str += "</tbody></table>";
+			$('#targetDiv').html(str);
+		});
+	});
+</script>
+</head>
+<body>
+	<input type="button" id="mybtn" value="XML 데이터 수신하기" />
+	<div id="targetDiv"></div>
+</body>
+</html>

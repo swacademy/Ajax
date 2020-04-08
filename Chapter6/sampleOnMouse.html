@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<title>Ajax Test using Radio Button</title>
+<script src="js/httpRequest.js"></script>
+<script>
+	var margin;
+	function loadMenu(num, m){
+		margin = m;
+		var url = "menu"+num+".html";
+		sendRequest(url, '', callback, "post");
+	}
+	function callback(){
+		if(httpRequest.readyState == 4 && httpRequest.status == 200){
+  	 		var msg = httpRequest.responseText;
+  	 		document.getElementById("menuA").innerHTML = msg;
+  	 		document.getElementById("menuA").style.marginLeft = margin + "px";			
+		}
+  	}
+</script>
+</head>
+<body>
+	| <a href="javascript:void()" onMouseOver="loadMenu(1,5)">Menu1을 읽어들입니다</a>
+	| <a href="javascript:void()" onMouseOver="loadMenu(2,190)">Menu2을 읽어들입니다</a> |
+	
+	<!--  여기로 출력 -->
+	<div id="menuA" class="menu"></div>
+</body>
+</html>

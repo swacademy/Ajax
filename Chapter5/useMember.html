@@ -1,0 +1,29 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>Member 클래스 사용</title>
+	<script src="js/member.js"></script>
+	<script>
+		function log(msg) {
+			var console = document.getElementById("debugConsole");
+			if (console != null) {
+				console.innerHTML += msg + "<br/>";
+			}
+		}
+		window.onload = function() {
+			var mem = new Member("ajax", "복종순", "7700001000000");
+			log('변경전');
+			log('회원 : ' + mem.toString());
+			log('나이 : ' + mem.getAge());
+			mem.setValue("ajax1", "조성모", "8000001000000");
+			log('변경후');
+			log('회원 : ' + mem.toString());
+			log('나이 : ' + mem.getAge());
+		}
+	</script>
+</head>
+<body>
+<div id="debugConsole"></div>
+</body>
+</html>

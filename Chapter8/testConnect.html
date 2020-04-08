@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ko">
+	<head>
+		<meta charset="utf-8">
+		<title>외부 연결 테스트</title>
+		<script>
+			var xmlObj;
+			window.onload = function() {
+				xmlObj = new XMLHttpRequest();
+				xmlObj.open("GET", "http://www.naver.com", true);
+				xmlObj.onreadystatechange = loadContent;
+				xmlObj.send(null);
+			}
+			function loadContent() {
+				if (xmlObj.readyState == 4) {
+					var result = document.getElementById("result");
+					if (xmlObj.status == 200) {
+						result.innerHTML = "로딩 성공";
+					} else {
+						result.innerHTML = "로딩 실패: " + xmlObj.status;
+					}
+				}
+			}
+		</script>
+	</head>
+	<body>
+		<div id="result"></div>
+	</body>
+</html>

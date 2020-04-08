@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="js/jquery-1.11.1.js"></script>
+<script>
+	$(document).ready(function(){		
+		$('#mybtn').click(function(){
+			$.getScript("js/test.js");
+		});
+	});
+</script>
+</head>
+<body>
+	<input type="button" id="mybtn" value="getJSON" />
+</body>
+</html>

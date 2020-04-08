@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Ajax and jQuery</title>
+<script src="js/jquery-1.11.1.js"></script>
+<script>
+	$(document).ready(function(){
+		$('#mybtn').click(function(){
+			var irum = $('#irum').val();
+			var age = $('#age').val();
+			var phone = $('#phone').val();
+			var url = "test.jsp";
+			var data = { irum : irum, age : age, phone : phone };
+			$('#targetDiv').load(url, data);
+		});
+	});
+</script>
+</head>
+<body>
+	Name : <input type="text" id="irum" name="irum" /><br />
+	Age : <input type="text" id="age" name="age" size="10" /><br />
+	Phone : <input type="text" id="phone" name="phone" size="40"/><br />
+	<input type="button" value="요청하기" id="mybtn" /><br />
+	<div id="targetDiv"></div>
+</body>
+</html>

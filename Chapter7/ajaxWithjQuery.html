@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <title>Ajax with jQuery</title>
+	<script src="js/jquery-1.11.1.js"></script>
+    <script>
+    	$(document).ready(function(){
+    		$('#btnsend').click(function(){
+    			$.ajax({
+    				url : "servlets/AjaxServlet",
+    				type : "POST",
+    				data : {
+    					name : $('#name').val(),
+    					age : $('#age').val(),
+    					phone : $('#phone').val()
+    				},
+    				success : function(data){
+    					$('#resultDisplay').html(data);	
+    				}
+    			});
+    		});
+    	});
+    </script>
+  </head>
+  <body>
+    <form>
+      <h3>Ajax With Servlet</h3>
+        이름 : <input id="name" type="text" /><br/>
+	  나이 : <input id="age" type="text" /><br/>
+	  핸드폰번호 : <input id="phone" type="text" /><br/>
+      <input id="btnsend" type="button" value="Servlet 에게 요청하기" /><br/>
+    </form>
+
+	<div id="resultDisplay"></div>
+  </body>
+</html>

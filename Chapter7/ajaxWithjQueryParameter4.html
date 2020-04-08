@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Ajax and jQuery</title>
+<script src="js/jquery-1.11.1.js"></script>
+<script>
+	$(document).ready(function(){
+		$('#myform').submit(function(){
+			$('#targetDiv').load("test.jsp", $(this).serializeArray());
+			
+			event.preventDefault();
+		});
+	});
+</script>
+</head>
+<body>
+<form id="myform">
+	Name : <input type="text" id="irum" name="irum" /><br />
+	Age : <input type="text" id="age" name="age" size="10" /><br />
+	Phone : <input type="text" id="phone" name="phone" size="40"/><br />
+	<input type="submit" value="요청하기" /><br />
+</form>	
+	<div id="targetDiv"></div>
+</body>
+</html>

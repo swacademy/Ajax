@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+	input {font-size:20pt; border:1px solid red; width:400px}
+</style>
+<script type="text/javascript" src="js/httpRequest.js"></script>
+<script type="text/javascript">
+	var keyword = null;
+	function check(key, obj){
+		keyword = key;
+		var param = "key=" + key + "&value=" + obj.value;
+		sendRequest("validation1.jsp", param, callback, "get");
+	}
+	function callback(){
+		if(httpRequest.readyState == 4 && httpRequest.status == 200){
+			var xmlDoc = httpRequest.responseXML;
+			var root = xmlDoc.firstChild;
+			var color = "red";
+			var flag = root.childNodes[1].firstChild.nodeValue;
+			var msg = root.childNodes[3].firstChild.nodeValue;
+			if(flag == "true") color = "blue";
+			if(keyword == "zipcode"){
+				document.getElementById("zipMsg").innerHTML = 
+					"<font size='4' color=" + color + ">" + msg + "</font>";
+			}else if(keyword == "handphone"){
+				document.getElementById("hpMsg").innerHTML = 
+					"<font size='4' color=" + color + ">" + msg + "</font>";
+			}else if(keyword == "email"){
+				document.getElementById("emailMsg").innerHTML = 
+					"<font size='4' color=" + color + ">" + msg + "</font>";
+			}
+		}
+	}
+</script>
+</head>
+<body>
+<h2>Ajax Validation Example1 </h2>
+    우편번호 : <input type="text" id="zipcode" onchange="check('zipcode', this)" /><div id="zipMsg"></div><br />
+    핸드폰번호 : <input type="text" id="hp" onchange="check('handphone', this)" /><div id="hpMsg"></div><br />
+    Email : <input type="text" id="email" onchange="check('email', this)" /><div id="emailMsg"></div><br />
+</body>
+</html>

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<title>Ajax and jQuery Load</title>
+<script src="js/jquery-1.11.1.js"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$('#mytext').bind("change", function(){
+			$('#targetDiv').load("date.jsp");
+		});
+	});
+	
+</script>
+</head>
+<body>
+	<form>
+		Name : <input type="text" id="mytext" /><br /><br />
+	Now : <span id="targetDiv"></span> 
+	</form>
+</body>
+</html>

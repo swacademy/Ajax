@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<lists>
+	<items>
+		<text>Americano</text>
+		<value>3000</value>
+	</items>
+	<items>
+		<text>Cafe Mocha</text>
+		<value>5000</value>
+	</items>
+	<items>
+		<text>Cafe Latte</text>
+		<value>3500</value>
+	</items>
+	<items>
+		<text>Capuccino</text>
+		<value>6000</value>
+	</items>
+</lists>

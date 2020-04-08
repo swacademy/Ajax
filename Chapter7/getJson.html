@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="js/jquery-1.11.1.js"></script>
+<script>
+	$(document).ready(function(){		
+		$('#mybtn').click(function(){
+			$.getJSON("test.json", function(data){
+				var str = "<table border='1'>";
+				$.each(data, function(key, val){
+					str += "<tr>";
+					str += "<td>" + key + "</td><td>" + val + "</td>";
+					str += "</tr>";
+				});
+				str += "</table>";
+				$('#targetDiv').html(str);
+			});
+			
+		});
+	});
+</script>
+</head>
+<body>
+	<input type="button" id="mybtn" value="getJSON" />
+	<div id="targetDiv"></div>
+</body>
+</html>

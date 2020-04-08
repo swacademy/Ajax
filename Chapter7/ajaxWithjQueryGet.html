@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<title>Ajax and jQuery GET</title>
+<script src="js/jquery-1.11.1.js"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$('#mytext').bind("change", function(){
+			$.get("date.jsp", function(data){
+					$('#mytime').val(data);
+				}
+			);
+		});
+	});
+	
+</script>
+</head>
+<body>
+	<form>
+		Name : <input type="text" id="mytext" /><br /><br />
+		<input type="text" id="mytime" size="30"/> 
+	</form>
+</body>
+</html>

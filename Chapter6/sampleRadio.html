@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<title>Ajax Test using Radio Button</title>
+<script src="js/httpRequest.js"></script>
+<script>
+	window.addEventListener("load", setup, false);
+	function setup(){
+		document.getElementById('rdo1').addEventListener("click", Click, false);
+		document.getElementById('rdo2').addEventListener("click", Click, false);
+		document.getElementById('rdo3').addEventListener("click", Click, false);
+	}
+	function Click(evt){
+		var param = "data=" + evt.target.value;
+		sendRequest("msg.jsp", param, getMsg, "get");
+	}
+	function getMsg(){
+		if(httpRequest.readyState == 4 && httpRequest.status == 200){
+			var msg = httpRequest.responseText;
+	 		document.forms["test1"].elements["output1"].value = msg;
+		}
+  	}
+</script>
+</head>
+<body>
+	<form name="test1">
+		<input type="radio" name="minutes" value="1" id="rdo1">1분 &nbsp;
+		<input type="radio" name="minutes" value="5" id="rdo2">5분 &nbsp;
+		<input type="radio" name="minutes" value="10" id="rdo3">10분<P>
+		출력 : <input type="text" name="output1" size="40">
+	</form>
+</body>
+</html>

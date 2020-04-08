@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>JSON Demo</title>
+<script>
+	window.addEventListener("load", setup, false);
+	function setup(){
+		document.getElementById("mybtn").addEventListener("click", Click, false);
+	}
+	function Click(){
+		var text = '{"irum" : "한지민", "gender" : "여성", "직업" : "탤런트 겸 영화배우", "phone" : "02-555-1234"}';
+		var obj = JSON.parse(text);
+		var str = obj.irum + "<br>" + obj.gender + "<br>" + obj.직업 + "<br>" + obj.phone;
+		document.getElementById("demo").innerHTML = str; 
+	}
+</script>
+</head>
+<body>
+<h2>JSON Object Creation in JavaScript</h2>
+<button id="mybtn">Show Data</button>
+<p id="demo"></p>
+</body>
+</html>

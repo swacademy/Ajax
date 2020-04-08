@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<title>Ajax Test using Radio Button</title>
+<script src="js/httpRequest.js"></script>
+<script>
+	window.addEventListener("load", setup, false);
+	function setup(evt){
+		document.getElementById("coffee").addEventListener("click", Click, false);
+		document.getElementById("fruit").addEventListener("click", Click, false);	
+		document.getElementById("lists").addEventListener("change", Change, false);
+	}
+	function Click(evt){
+		var url = (evt.target.id == "coffee") ? "coffee.xml" : "fruit.xml";
+		sendRequest(url, '', callback, "get");
+	}
+	function callback(){
+		if(httpRequest.readyState == 4 && httpRequest.status == 200){
+			xmlDoc = httpRequest.responseXML;
+			deleteAll(document.getElementById('lists'));
+			setItems(document.getElementById('lists'), xmlDoc);
+		}
+	}
+	function deleteAll(obj){
+		for(var i = 0 ; i < obj.options.length ; i++){
+			obj.options[i] = null;
+		}
+	}
+	function setItems(obj, xdoc){
+		var root = xdoc.firstChild;
+		var count = 1;
+		obj.options[0] = new Option("-----선택-----", '');
+		for(var i = 0 ; i < root.childNodes.length ; i++){
+			if(root.childNodes[i].tagName == "items"){
+				var node = root.childNodes[i];
+				var text = node.childNodes[1].firstChild.nodeValue;
+				var value = node.childNodes[3].firstChild.nodeValue;
+				obj.options[count] = new Option(text,value);
+				count++;
+			}
+		}
+		obj.options[0].selected = "true";
+	}
+  	function Change(evt){
+  		alert(evt.target.options[evt.target.selectedIndex].innerHTML + " --> " + evt.target.value);
+  	}
+</script>
+</head>
+<body>
+	<form name="test1">
+		<input type="button" id="coffee" value="커피 목록">
+		<input type="button" id="fruit" value="과일 목록"><br>
+		<select name="sel" size="10" id="lists" style="width:100px">
+			<option selected>-----선택-----</option>
+		</select>
+	</form>
+</body>
+</html>

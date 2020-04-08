@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<title>Ajax Test using Radio Button</title>
+<script src="js/httpRequest.js"></script>
+<script>
+	window.addEventListener("load", setup, false);
+	function setup(){
+		document.getElementById('yes').addEventListener("click", Click, false);
+	}
+	function Click(evt){
+		if(evt.target.value == "yes"){
+			sendRequest("msg1.jsp", '', getMsg, "post");
+		}
+	}
+	function getMsg(evt){
+		if(httpRequest.readyState == 4 && httpRequest.status == 200){
+  	 		var msg = httpRequest.responseText;
+  	 		msg = msg.split('&lt;input type="text" name="ok" value=""&gt;');
+  	 		msg = msg.join('<input type="text" name="ok" value="">');
+  	 		document.getElementById("output1").innerHTML = msg;
+		}
+  	}
+</script>
+</head>
+<body>
+YES 가 체크될 때만 처리
+	<form>
+		<input type="radio" name="yesno" value="yes" id="yes"> YES &nbsp;
+		<input type="radio" name="yesno" value="no" id="no" checked> NO
+	</form>
+	<!--  여기에 출력  -->
+	<div id="output1"></div>
+</body>
+</html>

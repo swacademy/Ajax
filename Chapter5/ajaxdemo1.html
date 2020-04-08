@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ko">
+	<head>
+		<meta charset="UTF-8">
+		<title>Ajax JSON Demo</title>
+		<style>
+			table{
+				margin:auto;
+				width:600px;
+				border-collapse : collapse;
+			}
+			th, td{
+				border : 1px solid black;
+			}
+			th{
+				background-color:yellow;
+				color:darkblue;
+			}
+			td{
+				text-align:center;
+			}
+		</style>
+		<script>
+			var xhrObj;
+			function send(){
+				xhrObj = new XMLHttpRequest();
+				xhrObj.open("get", "sungjuk_utf8.json", true);
+				xhrObj.onreadystatechange = callback;
+				xhrObj.send(null);
+			}
+			function callback(){
+				if(xhrObj.readyState == 4 && xhrObj.status == 200){
+					var jsondata = xhrObj.responseText;
+					var str = "<table><caption>성적 데이터</caption>";
+					var thArray = ["학번", "이름", "국어", "영어", "수학", "전산"];
+					str += "<thead><tr>";
+					for(var i = 0 ; i < thArray.length ; i++){
+						str += "<th>" + thArray[i] + "</th>";
+					}
+					str += "</tr></thead><tbody>";
+					jsondata = eval("(" + jsondata + ")");
+					for(var i = 0 ; i < jsondata.students.length ; i++){
+						str += "<tr>";
+						str += "<td>" + jsondata.students[i].hakbun + "</td>";
+						str += "<td>" + jsondata.students[i].irum + "</td>";
+						str += "<td>" + jsondata.students[i].kor + "</td>";
+						str += "<td>" + jsondata.students[i].eng + "</td>";
+						str += "<td>" + jsondata.students[i].mat + "</td>";
+						str += "<td>" + jsondata.students[i].edp + "</td>";
+						str += "</tr>";
+					}
+					str += "</tbody></table>";
+					document.getElementById("rcvMsg").innerHTML = str;
+					//alert(jsondata);
+				}
+			}
+		</script>
+	</head>
+	<body>
+		<h1>JSON 파일 수신</h1>
+		<input type="button" value="JSON 파일 수신" id="btn" onclick="send()"/><br />
+		<div id="rcvMsg"></div>
+	</body>
+</html>

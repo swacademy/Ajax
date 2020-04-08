@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+
+<html lang="ko">
+
+<head>
+
+<meta charset="utf-8" />
+
+<title>Ajax Test using Radio Button</title>
+
+<script src="js/httpRequest.js"></script>
+<script>
+	function loadMsg(val){
+		
+		var url = "msg"+val+".xml";
+		sendRequest(url, '', callback, "post");
+	}
+	
+	function callback(){
+		if(httpRequest.readyState == 4 && httpRequest.status == 200){
+  	 		var xmlDoc = httpRequest.responseXML;
+  	 		var root = xmlDoc.firstChild;
+			var msg = root.firstChild.nodeValue;
+  	 		document.getElementById("output1").innerHTML = msg;
+		}
+  	}
+</script>
+
+</head>
+
+<body>
+	
+	<A href="javascript:loadMsg(1)">test1 입니다</A><br>
+	<A href="javascript:loadMsg(2)">test2 입니다</A><br>
+	<A href="javascript:loadMsg(3)">test3 입니다</A><br>
+	
+	<!-- 여기에 출력 -->
+	<div id="output1" style="font-size:24px"></div>
+
+</body>
+
+</html>

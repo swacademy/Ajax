@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<lists>
+	<items>
+		<text>Banana</text>
+		<value>1000</value>
+	</items>
+	<items>
+		<text>Orange</text>
+		<value>2000</value>
+	</items>
+	<items>
+		<text>Apple</text>
+		<value>3000</value>
+	</items>
+	<items>
+		<text>Grape</text>
+		<value>4000</value>
+	</items>
+	<items>
+		<text>Plums</text>
+		<value>5000</value>
+	</items>
+	<items>
+		<text>Nuts</text>
+		<value>6000</value>
+	</items>
+</lists>
